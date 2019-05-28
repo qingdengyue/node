@@ -9,24 +9,17 @@ Node.js is a JavaScript runtime built on the [V8 JavaScript engine][].
 
 ## Contributing
 
-If errors are found in this documentation, please [submit an issue][]
-or see [the contributing guide][] for directions on how to submit a patch.
+Report errors in this documentation in [the issue tracker][]. See
+[the contributing guide][] for directions on how to submit pull requests.
 
-Every file is generated based on the corresponding `.md` file in the
-`doc/api/` folder in Node.js's source tree. The documentation is generated
-using the `tools/doc/generate.js` program. An HTML template is located at
-`doc/template.html`.
 
 ## Stability Index
 
 <!--type=misc-->
 
-Throughout the documentation are indications of a section's
-stability. The Node.js API is still somewhat changing, and as it
-matures, certain parts are more reliable than others. Some are so
-proven, and so relied upon, that they are unlikely to ever change at
-all. Others are brand new and experimental, or known to be hazardous
-and being redesigned.
+Throughout the documentation are indications of a section's stability. Some APIs
+are so proven and so relied upon that they are unlikely to ever change at all.
+Others are brand new and experimental, or known to be hazardous.
 
 The stability indices are as follows:
 
@@ -61,12 +54,8 @@ attaching a listener to the [`'warning'`][] event.
 added: v0.6.12
 -->
 
-> Stability: 1 - Experimental
-
-Every `.html` document has a corresponding `.json` document presenting
-the same information in a structured manner. This feature is
-experimental, and added for the benefit of IDEs and other utilities that
-wish to do programmatic things with the documentation.
+Every `.html` document has a corresponding `.json` document. This is for IDEs
+and other utilities that consume the documentation.
 
 ## Syscalls and man pages
 
@@ -84,6 +73,6 @@ issue 4760](https://github.com/nodejs/node/issues/4760).
 [`'warning'`]: process.html#process_event_warning
 [`fs.open()`]: fs.html#fs_fs_open_path_flags_mode_callback
 [`stderr`]: process.html#process_process_stderr
-[submit an issue]: https://github.com/nodejs/node/issues/new
 [the contributing guide]: https://github.com/nodejs/node/blob/master/CONTRIBUTING.md
+[the issue tracker]: https://github.com/nodejs/node/issues/new
 [V8 JavaScript engine]: https://v8.dev/

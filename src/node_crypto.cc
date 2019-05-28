@@ -32,7 +32,9 @@
 #include "async_wrap-inl.h"
 #include "base_object-inl.h"
 #include "env-inl.h"
+#include "memory_tracker-inl.h"
 #include "string_bytes.h"
+#include "threadpoolwork-inl.h"
 #include "util-inl.h"
 #include "v8.h"
 

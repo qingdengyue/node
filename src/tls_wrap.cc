@@ -22,6 +22,7 @@
 #include "tls_wrap.h"
 #include "async_wrap-inl.h"
 #include "debug_utils.h"
+#include "memory_tracker-inl.h"
 #include "node_buffer.h"  // Buffer
 #include "node_crypto.h"  // SecureContext
 #include "node_crypto_bio.h"  // NodeBIO
@@ -938,9 +939,9 @@ void TLSWrap::EnableTrace(
 
 #if HAVE_SSL_TRACE
   if (wrap->ssl_) {
-    BIO* b = BIO_new_fp(stderr,  BIO_NOCLOSE | BIO_FP_TEXT);
+    wrap->bio_trace_.reset(BIO_new_fp(stderr,  BIO_NOCLOSE | BIO_FP_TEXT));
     SSL_set_msg_callback(wrap->ssl_.get(), SSL_trace);
-    SSL_set_msg_callback_arg(wrap->ssl_.get(), b);
+    SSL_set_msg_callback_arg(wrap->ssl_.get(), wrap->bio_trace_.get());
   }
 #endif
 }
@@ -1032,6 +1033,14 @@ int TLSWrap::SelectSNIContextCallback(SSL* s, int* ad, void* arg) {
   // Call the SNI callback and use its return value as context
   Local<Object> object = p->object();
   Local<Value> ctx;
+
+  // Set the servername as early as possible
+  Local<Object> owner = p->GetOwner();
+  if (!owner->Set(env->context(),
+                  env->servername_string(),
+                  OneByteString(env->isolate(), servername)).FromMaybe(false)) {
+    return SSL_TLSEXT_ERR_NOACK;
+  }
 
   if (!object->Get(env->context(), env->sni_context_string()).ToLocal(&ctx))
     return SSL_TLSEXT_ERR_NOACK;
